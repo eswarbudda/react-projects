@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Person from './Person/Person'
 
@@ -48,27 +47,31 @@ class App extends Component {
             cursor: 'pointer'
         };
 
+        let persons = null;
+        if( this.state.showPersons === true ) {
+            persons = (
+                <div>
+                    <Person
+                        name={this.state.persons[0].name}
+                        age={this.state.persons[0].age}/>
+                    <Person
+                        name={this.state.persons[1].name}
+                        age={this.state.persons[1].age}
+                        change={this.changeNameHandler}>My hobbies: sports</Person>
+                    <Person
+                        name={this.state.persons[2].name}
+                        age={this.state.persons[2].age}/>
+                </div>
+            );
+        }
+
         return (
             <div className="App">
                 <h1>Hello React gurus!</h1>
                 <button
                     style={style}
                     onClick={this.switchPersonsEventHandler}> Toggle Persons </button>
-                {
-                    this.state.showPersons === true ?
-                    <div>
-                        <Person
-                            name={this.state.persons[0].name}
-                            age={this.state.persons[0].age}/>
-                        <Person
-                            name={this.state.persons[1].name}
-                            age={this.state.persons[1].age}
-                            change={this.changeNameHandler}>My hobbies: sports</Person>
-                        <Person
-                            name={this.state.persons[2].name}
-                            age={this.state.persons[2].age}/>
-                    </div> : null
-                }
+                {persons}
             </div>
         );
     }
