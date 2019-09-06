@@ -1,0 +1,8 @@
+    .UserInput {
+        width: 21%;
+        margin: auto;
+        border: 1px solid #abc123;
+        box-shadow: 0 2px 3px #282c34;
+        /*padding: 1px;*/
+        text-align: left;
+    }
