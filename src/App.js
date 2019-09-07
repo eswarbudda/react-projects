@@ -1,73 +1,42 @@
 import React, {Component} from 'react';
 import './App.css';
-import Person from './Person/Person'
+import Validation from './Validation/Validation'
+import Char from './Char/Char'
 
 class App extends Component {
     state = {
-        persons: [
-            {id: '100', name: 'Max', age: 29},
-            {id: '101', name: 'Manu', age: 30},
-            {id: '102', name: 'Linda', age: 26}
-        ],
-        otherPerson: 'Some other reason',
-        showPersons: false
+        inputText: ''
     };
 
-    changeNameHandler = (event) => {
-        this.setState({
-            persons: [
-                {id: '100', name: 'Maximillan', age: 29},
-                {id: '101', name: event.target.value, age: 30},
-                {id: '102', name: 'Linda', age: 26}
-            ]
-        })
+    deleteCharHandler = (charIndex) => {
+        const userInput = this.state.inputText.split('');
+        userInput.splice(charIndex, 1);
+        const updatedText = userInput.join('');
+        console.log('deleteCharHandler');
+        this.setState({inputText: updatedText})
     }
 
-    switchPersonsEventHandler = () => {
-        const show = this.state.showPersons;
-        this.setState({showPersons: !show});
-    }
-
-    deletePersonHandler = (personIndex) => {
-        //const p = this.state.persons.slice();  //should work but below is using spread operator more efficient
-        const p = [...this.state.persons];
-        p.splice(personIndex, 1);
-        this.setState({persons: p})
-    }
+    textChangedHandler = (event) => {
+        this.setState({inputText: event.target.value});
+    };
 
     render() {
-        const style = {
-            backgroundColor: 'blue',
-            font: 'inherit',
-            border: '3x solid red',
-            padding: '8px',
-            cursor: 'pointer'
-        };
-
-        let persons = null;
-        if( this.state.showPersons === true ) {
-            persons = (
-                <div>
-                {
-                    this.state.persons.map((person, index) => {
-                    return <Person
-                        click = {() => this.deletePersonHandler(index)}
-                        name = {person.name}
-                        age = {person.age}
-                        key = {person.id}/>
-                    })
-                }
-                </div>
+        const charList = this.state.inputText.split('').map((ch, index) => {
+            return (
+              <Char charactor={ch} key={index}
+              deleted={() => this.deleteCharHandler(index)}/>
             );
-        }
+        });
+
 
         return (
             <div className="App">
                 <h1>Hello React gurus!</h1>
-                <button
-                    style={style}
-                    onClick={this.switchPersonsEventHandler}> Toggle Persons </button>
-                {persons}
+                <input type='text'
+                onChange={this.textChangedHandler} value={this.state.inputText}/>
+                <p>{this.state.inputText}</p>
+                <Validation inputLength={this.state.inputText.length}/>
+                {charList}
             </div>
         );
     }

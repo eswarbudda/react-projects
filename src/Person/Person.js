@@ -6,7 +6,7 @@ import './Person.css';
             <div className="Person">
                 <p onClick={props.click}>I'm {props.name} and my age is: {props.age}</p>
                 <p>{props.children}</p>
-                <input type='text' onChange={props.change} value={props.name}/>
+                <input type='text' onChange={props.change} /> {/*value={props.name}/>*/}
             </div>
         )
     };
